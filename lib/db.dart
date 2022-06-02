@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import './usuario.dart';
@@ -9,7 +10,7 @@ class DB {
       join(await getDatabasesPath(), 'negocio.db'),
       onCreate: (db, version) {
         return db.execute(
-          "CREATE TABLE usuario(id int primary key , nombre text , apellido text , cell int, Fcumple date);",
+          "CREATE TABLE usuario(id int primary key AUTOINCREMENT NOT NULL , nombre text , apellido text , cell int, Fcumple date); ",
         );
       },
       version: 1,
@@ -51,13 +52,50 @@ class DB {
   }
 
 //eliminar usuarios
-  Future<void> deleteuser(int id) async {
+  static Future<void> deleteuser(int id) async {
     final database = await _openDB();
 
-    await database.delete(
-      'usuario',
-      where: "id = ?",
-      whereArgs: [id],
-    );
+    await database.delete("ususario", where: "id = ?", whereArgs: [id]);
+  }
+
+//funciones para la tabla servicio
+
+//agregar servicio
+  static Future<int> createItemser(String nombre, int valor) async {
+    final Database database = await _openDB();
+
+    final data = {
+      'nombre': nombre,
+      'valor ': valor,
+    };
+    final id = await database.insert('servicios', data,
+        conflictAlgorithm: ConflictAlgorithm.replace);
+    return id;
+  }
+
+  //mostrar servicios
+  static Future<List<Map<String, dynamic>>> getservis() async {
+    final Database database = await _openDB();
+    return database.query('servicios', orderBy: "id");
+  }
+
+  //actualizar un servicio
+  static Future<int> updateserv(int id, String nombre, int valor) async {
+    final Database database = await _openDB();
+    final data = {
+      'nombre': nombre,
+      'valor': valor,
+    };
+
+    final result = await database
+        .update('servicios', data, where: "id = ?", whereArgs: [id]);
+    return result;
+  }
+
+  // eliminar servicio
+  static Future<void> deleteserv(int id) async {
+    final Database database = await _openDB();
+
+    await database.delete("servicios", where: "id = ?", whereArgs: [id]);
   }
 }

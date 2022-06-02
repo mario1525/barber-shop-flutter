@@ -50,9 +50,9 @@ class userspp extends State<users> {
                             ),
                         IconButton(
                             icon: const Icon(Icons.delete),
-                            onPressed:
-                                () {} //=>_deleteItem(_journals[index]['id']),
-                            ),
+                            onPressed: () {
+                              _deleteItem(_journals[index]['id']);
+                            }),
                       ],
                     ),
                   ),
@@ -67,5 +67,13 @@ class userspp extends State<users> {
         },
       ),
     );
+  }
+
+  void _deleteItem(int id) async {
+    await DB.deleteuser(id);
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text('Successfully deleted a journal!'),
+    ));
+    _updateDate();
   }
 }

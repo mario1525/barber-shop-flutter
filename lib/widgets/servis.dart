@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class myservis extends StatefulWidget{
+class myservis extends StatefulWidget {
   const myservis({Key? key}) : super(key: key);
 
-  myServisestate createState(){
+  myServisestate createState() {
     return myServisestate();
   }
 }
 
-class myServisestate extends State<myservis>{
+class myServisestate extends State<myservis> {
   final _formKey = GlobalKey<FormState>();
 
   var _list = ['uno', 'dos ', 'tres', 'cuaro'];
@@ -16,7 +16,6 @@ class myServisestate extends State<myservis>{
 
   var _list2 = ['uno', 'dos ', 'tres', 'cuaro'];
   var _vista2 = 'seleccione un servicio';
-
 
   @override
   Widget build(BuildContext context) {
@@ -45,30 +44,20 @@ class myServisestate extends State<myservis>{
           ),
           Positioned(
               child: DropdownButton(
-                items: _list.map((String a){
-                  return DropdownMenuItem(
-                 value: a,
-                  child: Text(a));
-              }).toList(),
-              onChanged:(_){
-
-              },
-              hint: Text(_vista),
-              )
-          ),
+            items: _list.map((String a) {
+              return DropdownMenuItem(value: a, child: Text(a));
+            }).toList(),
+            onChanged: (_) {},
+            hint: Text(_vista),
+          )),
           Positioned(
               child: DropdownButton(
-                items: _list2.map((String a){
-                  return DropdownMenuItem(
-                      value: a,
-                      child: Text(a));
-                }).toList(),
-                onChanged:(_){
-
-                },
-                hint: Text(_vista2),
-              )
-          ),
+            items: _list2.map((String a) {
+              return DropdownMenuItem(value: a, child: Text(a));
+            }).toList(),
+            onChanged: (_) {},
+            hint: Text(_vista2),
+          )),
           Positioned(
             child: ElevatedButton(
               onPressed: () {
@@ -82,6 +71,12 @@ class myServisestate extends State<myservis>{
             ),
           ),
         ]),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          Navigator.pushNamed(context, '/newservis');
+        },
       ),
     );
   }
