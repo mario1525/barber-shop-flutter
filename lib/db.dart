@@ -9,12 +9,23 @@ class DB {
     return openDatabase(
       join(await getDatabasesPath(), 'negocio.db'),
       onCreate: (db, version) {
-        return db.execute(
-          "CREATE TABLE usuario(id int primary key AUTOINCREMENT NOT NULL , nombre text , apellido text , cell int, Fcumple date); ",
-        );
+        return onUpgrade();
       },
-      version: 1,
+      version: 2,
     );
+    onUpgrade(Database database) async {
+      Batch batch = database.batch();
+
+      batch.execute(
+          "CREATE TABLE usuario(id int primary key  ,nombre text ,apellido text , cell int, Fcumple date);");
+      batch.execute(
+          " CREATE TABLE servicios(id int primary key  ,nombre text , valor int);");
+      batch.execute(
+          "CREATE TABLE motiladas(id int primary key  , fecha date,id_servis int,id_user int ,FOREIGN KEY(id_user) REFERENCES usuario(id), FOREIGN KEY(id_servis) REFERENCES servicios(id));");
+      List<dynamic> result = await batch.commit();
+    }
+
+    ;
   }
 
 //insertar ususario
