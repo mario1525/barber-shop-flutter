@@ -52,14 +52,15 @@ class ServisUP extends State<servis> {
                 children: [
                   TextField(
                     controller: nombrecontroller,
-                    decoration: const InputDecoration(hintText: 'Title'),
+                    decoration: const InputDecoration(hintText: 'nombre'),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   TextField(
                     controller: valorcontroller,
-                    decoration: const InputDecoration(hintText: 'Description'),
+                    decoration: const InputDecoration(hintText: 'valor'),
+                    keyboardType: TextInputType.number,
                   ),
                   const SizedBox(
                     height: 20,

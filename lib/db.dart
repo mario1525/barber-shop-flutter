@@ -1,37 +1,37 @@
 import 'dart:async';
-
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import './usuario.dart';
 
 class DB {
-  static Future<Database> _openDB() async {
-    return openDatabase(
-      join(await getDatabasesPath(), 'negocio.db'),
-      onCreate: (db, version) {
-        return onUpgrade();
-      },
-      version: 2,
-    );
-    onUpgrade(Database database) async {
-      Batch batch = database.batch();
+  static Database _db;
 
-      batch.execute(
-          "CREATE TABLE usuario(id int primary key  ,nombre text ,apellido text , cell int, Fcumple date);");
-      batch.execute(
-          " CREATE TABLE servicios(id int primary key  ,nombre text , valor int);");
-      batch.execute(
-          "CREATE TABLE motiladas(id int primary key  , fecha date,id_servis int,id_user int ,FOREIGN KEY(id_user) REFERENCES usuario(id), FOREIGN KEY(id_servis) REFERENCES servicios(id));");
-      List<dynamic> result = await batch.commit();
-    }
+  Future<Database> get db async {
+    _db = await initDb();
+    return _db;
+  }
 
-    ;
+  initDb() async {
+    String path = join(await getDatabasesPath(), 'negocio.db');
+    var theDb = await openDatabase(path, version: 1, onCreate: _onCreate);
+    return theDb;
+  }
+
+  static _onCreate(Database db, int version) async {
+    Batch batch = db.batch();
+
+    batch.execute(
+        "CREATE TABLE usuario(id int primary key  ,nombre text ,apellido text , cell int, Fcumple date);");
+    batch.execute(
+        " CREATE TABLE servicios(id int primary key  ,nombre text , valor int);");
+    batch.execute(
+        "CREATE TABLE motiladas(id int primary key  , fecha date,id_servis int,id_user int ,FOREIGN KEY(id_user) REFERENCES usuario(id), FOREIGN KEY(id_servis) REFERENCES servicios(id));");
+    List<dynamic> result = await batch.commit();
   }
 
 //insertar ususario
   static Future<int> createItem(
       String name, String? ape, int cell, String cump) async {
-    final Database database = await _openDB();
+    final Database database = await _db;
 
     final data = {
       'nombre': name,
@@ -46,25 +46,35 @@ class DB {
 
 //mostrar ususarios
   static Future<List<Map<String, dynamic>>> getItems() async {
-    final Database database = await _openDB();
+    final Database database = await _db;
     return database.query('usuario', orderBy: "id");
   }
 
 //modificar usuarios
-  Future<void> updateuser(Usuario usuario) async {
-    final database = await _openDB();
+  static Future<int> updateuser(
+      int id, String nombre, String ape, int cel, String fecha) async {
+    final database = await _db;
 
-    await database.update(
+    final data = {
+      'id': id,
+      'nombre': nombre,
+      'ape': ape,
+      'cell': cel,
+      'Fcumple': fecha,
+    };
+
+    final result2 = await database.update(
       'usuario',
-      usuario.toMap(),
+      data,
       where: "id = ?",
-      whereArgs: [usuario.id],
+      whereArgs: [id],
     );
+    return result2;
   }
 
 //eliminar usuarios
   static Future<void> deleteuser(int id) async {
-    final database = await _openDB();
+    final database = await _db;
 
     await database.delete("ususario", where: "id = ?", whereArgs: [id]);
   }
@@ -73,7 +83,7 @@ class DB {
 
 //agregar servicio
   static Future<int> createItemser(String nombre, int valor) async {
-    final Database database = await _openDB();
+    final Database database = await _db;
 
     final data = {
       'nombre': nombre,
@@ -86,13 +96,13 @@ class DB {
 
   //mostrar servicios
   static Future<List<Map<String, dynamic>>> getservis() async {
-    final Database database = await _openDB();
+    final Database database = await _db;
     return database.query('servicios', orderBy: "id");
   }
 
   //actualizar un servicio
   static Future<int> updateserv(int id, String nombre, int valor) async {
-    final Database database = await _openDB();
+    final Database database = await _db;
     final data = {
       'nombre': nombre,
       'valor': valor,
@@ -105,8 +115,11 @@ class DB {
 
   // eliminar servicio
   static Future<void> deleteserv(int id) async {
-    final Database database = await _openDB();
+    final Database database = await _db;
 
     await database.delete("servicios", where: "id = ?", whereArgs: [id]);
   }
+
+  //para servir el formulario de motiladas
+
 }
