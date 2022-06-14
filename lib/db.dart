@@ -3,26 +3,27 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 class DB {
-  static Database _db;
-
-  Future<Database> get db async {
-    _db = await initDb();
-    return _db;
-  }
-
-  initDb() async {
+  static Future<Database> initDb() async {
     String path = join(await getDatabasesPath(), 'negocio.db');
-    var theDb = await openDatabase(path, version: 1, onCreate: _onCreate);
+    Database theDb = await openDatabase(
+      path,
+      version: 41,
+      onCreate: _onCreate,
+    );
     return theDb;
   }
 
   static _onCreate(Database db, int version) async {
     Batch batch = db.batch();
 
-    batch.execute(
-        "CREATE TABLE usuario(id int primary key  ,nombre text ,apellido text , cell int, Fcumple date);");
+    batch.execute("DROP TABLE IF EXISTS usuario");
+    batch.execute("DROP TABLE IF EXISTS servicios");
+    batch.execute("DROP TABLE IF EXISTS motiladas");
+
     batch.execute(
         " CREATE TABLE servicios(id int primary key  ,nombre text , valor int);");
+    batch.execute(
+        "CREATE TABLE usuario(id int primary key  ,nombre text ,apellido text , cell int, Fcumple date);");
     batch.execute(
         "CREATE TABLE motiladas(id int primary key  , fecha date,id_servis int,id_user int ,FOREIGN KEY(id_user) REFERENCES usuario(id), FOREIGN KEY(id_servis) REFERENCES servicios(id));");
     List<dynamic> result = await batch.commit();
@@ -31,7 +32,7 @@ class DB {
 //insertar ususario
   static Future<int> createItem(
       String name, String? ape, int cell, String cump) async {
-    final Database database = await _db;
+    final Database database = await initDb();
 
     final data = {
       'nombre': name,
@@ -46,14 +47,14 @@ class DB {
 
 //mostrar ususarios
   static Future<List<Map<String, dynamic>>> getItems() async {
-    final Database database = await _db;
+    final Database database = await initDb();
     return database.query('usuario', orderBy: "id");
   }
 
 //modificar usuarios
   static Future<int> updateuser(
       int id, String nombre, String ape, int cel, String fecha) async {
-    final database = await _db;
+    final database = await initDb();
 
     final data = {
       'id': id,
@@ -74,8 +75,7 @@ class DB {
 
 //eliminar usuarios
   static Future<void> deleteuser(int id) async {
-    final database = await _db;
-
+    final database = await initDb();
     await database.delete("ususario", where: "id = ?", whereArgs: [id]);
   }
 
@@ -83,7 +83,7 @@ class DB {
 
 //agregar servicio
   static Future<int> createItemser(String nombre, int valor) async {
-    final Database database = await _db;
+    final Database database = await initDb();
 
     final data = {
       'nombre': nombre,
@@ -96,13 +96,13 @@ class DB {
 
   //mostrar servicios
   static Future<List<Map<String, dynamic>>> getservis() async {
-    final Database database = await _db;
+    final Database database = await initDb();
     return database.query('servicios', orderBy: "id");
   }
 
   //actualizar un servicio
   static Future<int> updateserv(int id, String nombre, int valor) async {
-    final Database database = await _db;
+    final Database database = await initDb();
     final data = {
       'nombre': nombre,
       'valor': valor,
@@ -115,7 +115,7 @@ class DB {
 
   // eliminar servicio
   static Future<void> deleteserv(int id) async {
-    final Database database = await _db;
+    final Database database = await initDb();
 
     await database.delete("servicios", where: "id = ?", whereArgs: [id]);
   }

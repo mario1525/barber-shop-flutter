@@ -72,7 +72,7 @@ class userspp extends State<users> {
   void _deleteItem(int id) async {
     await DB.deleteuser(id);
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text('Successfully deleted a journal!'),
+      content: Text('se elimino con exito un usuario'),
     ));
     _updateDate();
   }
