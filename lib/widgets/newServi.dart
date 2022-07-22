@@ -105,17 +105,16 @@ class ServisUP extends State<servis> {
                 color: Color.fromARGB(255, 128, 236, 255),
                 margin: const EdgeInsets.all(15),
                 child: ListTile(
-                    title: Text(_journals[index]['title']),
-                    subtitle: Text(_journals[index]['description']),
+                    title: Text(_journals[index]['nombre']),
+                    //subtitle: Text(_journals[index]['valor']),
                     trailing: SizedBox(
                       width: 100,
                       child: Row(
                         children: [
                           IconButton(
-                              icon: const Icon(Icons.edit),
-                              onPressed:
-                                  () {} //=> _showForm(_journals[index]['id']),
-                              ),
+                            icon: const Icon(Icons.edit),
+                            onPressed: () => updateserv(_journals[index]['id']),
+                          ),
                           IconButton(
                               icon: const Icon(Icons.delete),
                               onPressed:

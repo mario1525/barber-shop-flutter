@@ -4,29 +4,22 @@ import 'package:path/path.dart';
 
 class DB {
   static Future<Database> initDb() async {
-    String path = join(await getDatabasesPath(), 'negocio.db');
+    String path = join(await getDatabasesPath(), 'negocios.db');
     Database theDb = await openDatabase(
       path,
-      version: 41,
+      version: 8,
       onCreate: _onCreate,
     );
     return theDb;
   }
 
   static _onCreate(Database db, int version) async {
-    Batch batch = db.batch();
-
-    batch.execute("DROP TABLE IF EXISTS usuario");
-    batch.execute("DROP TABLE IF EXISTS servicios");
-    batch.execute("DROP TABLE IF EXISTS motiladas");
-
-    batch.execute(
-        " CREATE TABLE servicios(id int primary key  ,nombre text , valor int);");
-    batch.execute(
+    db.execute(
+        "CREATE TABLE servicios(id int primary key  ,nombre text , valor int);");
+    db.execute(
         "CREATE TABLE usuario(id int primary key  ,nombre text ,apellido text , cell int, Fcumple date);");
-    batch.execute(
+    db.execute(
         "CREATE TABLE motiladas(id int primary key  , fecha date,id_servis int,id_user int ,FOREIGN KEY(id_user) REFERENCES usuario(id), FOREIGN KEY(id_servis) REFERENCES servicios(id));");
-    List<dynamic> result = await batch.commit();
   }
 
 //insertar ususario
@@ -122,4 +115,25 @@ class DB {
 
   //para servir el formulario de motiladas
 
+//servir lista de usuario
+
+//mostrar ususarios
+  static Future<List<dynamic>> getClientes() async {
+    final Database database = await initDb();
+    var result = await database.rawQuery("SELECT nombre  FROM usuario");
+    return result;
+  }
+
+//añadir motilada
+  static Future<int> createmotilada(int ususario, int servicio) async {
+    final Database database = await initDb();
+
+    final data = {
+      'id_user': ususario,
+      'id_servis ': servicio,
+    };
+    final id = await database.insert('motiladas', data,
+        conflictAlgorithm: ConflictAlgorithm.replace);
+    return id;
+  }
 }

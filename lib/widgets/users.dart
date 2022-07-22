@@ -68,7 +68,9 @@ class userspp extends State<users> {
       ),
     );
   }
+//actualizar usuario
 
+// eliminar usuario
   void _deleteItem(int id) async {
     await DB.deleteuser(id);
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
