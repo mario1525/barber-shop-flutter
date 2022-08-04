@@ -4,7 +4,7 @@ import 'package:path/path.dart';
 
 class DB {
   static Future<Database> initDb() async {
-    String path = join(await getDatabasesPath(), 'negocios.db');
+    String path = join(await getDatabasesPath(), 'Datos.db');
     Database theDb = await openDatabase(
       path,
       version: 8,
@@ -15,11 +15,13 @@ class DB {
 
   static _onCreate(Database db, int version) async {
     db.execute(
+        "CREATE TABLE usuario(id int primary key  ,nombre text ,apellido text , cell int, Fcumple text);");
+    db.execute(
         "CREATE TABLE servicios(id int primary key  ,nombre text , valor int);");
     db.execute(
-        "CREATE TABLE usuario(id int primary key  ,nombre text ,apellido text , cell int, Fcumple date);");
+        "CREATE TABLE factura(id int primary key  , fecha date, id_user int ,FOREIGN KEY(id_user) REFERENCES usuario(id));");
     db.execute(
-        "CREATE TABLE motiladas(id int primary key  , fecha date,id_servis int,id_user int ,FOREIGN KEY(id_user) REFERENCES usuario(id), FOREIGN KEY(id_servis) REFERENCES servicios(id));");
+        "CREATE TABLE det_fac(id int primary key  ,id_fact int , id_serv int, FOREIGN KEY(id_fact) REFERENCES factura(id),FOREIGN KEY(id_serv) REFERENCES servicios(id));");
   }
 
 //insertar ususario
@@ -125,15 +127,5 @@ class DB {
   }
 
 //añadir motilada
-  static Future<int> createmotilada(int ususario, int servicio) async {
-    final Database database = await initDb();
 
-    final data = {
-      'id_user': ususario,
-      'id_servis ': servicio,
-    };
-    final id = await database.insert('motiladas', data,
-        conflictAlgorithm: ConflictAlgorithm.replace);
-    return id;
-  }
 }

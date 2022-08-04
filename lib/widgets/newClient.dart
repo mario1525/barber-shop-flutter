@@ -82,7 +82,7 @@ class newUserstate extends State<newUser> {
                 controller: myController4,
                 decoration: const InputDecoration(
                   icon: Icon(Icons.grid_on_rounded),
-                  hintText: 'What is your birthday ',
+                  hintText: 'YYY-MM-DD ',
                   labelText: 'birthday date *',
                 ),
                 keyboardType: TextInputType.datetime,
@@ -113,6 +113,15 @@ class newUserstate extends State<newUser> {
   Future<void> _addItem() async {
     int valDInt = int.parse(myController3.text);
     await DB.createItem(
-        myController1.text, myController2.text, valDInt, myController4.text);
+        myController1.text, myController2.text, valDInt, EVfechas(myController4.text));
+  }
+  String EVfechas(String fecha) {
+    final newValue = fecha
+        .replaceAll("/", "-")
+        .replaceAll(";", "-")
+        .replaceAll(":", "-")
+        .replaceAll(".", "-")
+        .replaceAll(" ", "");
+    return newValue;
   }
 }

@@ -7,8 +7,8 @@ import 'widgets/users.dart';
 import 'widgets/newServi.dart';
 
 void main() {
-  runApp(MaterialApp(
-    title: 'rutas ',
+  runApp(MaterialApp( 
+    title: 'Rutas ',
     initialRoute: '/',
     routes: {
       '/': (context) => myhome(),
