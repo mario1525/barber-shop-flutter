@@ -10,7 +10,17 @@ class myservis extends StatefulWidget {
 }
 
 class MyServisestate extends State<myservis> {
-  final _formKey = GlobalKey<FormState>();
+  List<Map<String, dynamic>> _journals = [];
+  bool _isLoading = true;
+
+  void update() async {
+    final data = await DB.getItems();
+    _journals = data;
+    _isLoading = false;
+  }
+
+  var _list = ['uno', 'dos ', 'tres', 'cuaro'];
+  var _vista = 'seleccione el Nombre del cliente';
 
   @override
   Widget build(BuildContext context) {
@@ -18,15 +28,37 @@ class MyServisestate extends State<myservis> {
       appBar: AppBar(
         title: const Text('Algarin Barber Shop'),
       ),
-      body: Form(
-        key: _formKey,
-        child: Center(
-          child: Column(
-            children: [
-
-            ],
-          ),
-        ),
+      body: _isLoading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : ListView.builder(
+              itemCount: _journals.length,
+              itemBuilder: (context, index) => Card(
+                color: Color.fromARGB(255, 93, 150, 235),
+                margin: const EdgeInsets.all(15),
+                child: ListTile(
+                  title: Text(_journals[index]['nombre']),
+                  subtitle: Text(_journals[index]['apellido']),
+                  trailing: SizedBox(
+                    width: 100,
+                    child: Row(
+                      children: [
+                        IconButton(
+                            icon:
+                                const Icon(Icons.assignment_turned_in_outlined),
+                            onPressed: () {}),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          update();
+        },
       ),
     );
   }
