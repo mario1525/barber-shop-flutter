@@ -23,6 +23,7 @@ class userspp extends State<users> {
 
   @override
   Widget build(BuildContext context) {
+    _updateDate();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Algarin Barber Shop'),

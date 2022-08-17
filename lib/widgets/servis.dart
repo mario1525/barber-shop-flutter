@@ -15,15 +15,15 @@ class MyServisestate extends State<myservis> {
 
   void update() async {
     final data = await DB.getItems();
-    _journals = data;
-    _isLoading = false;
+    setState(() {
+      _journals = data;
+      _isLoading = false;
+    });
   }
-
-  var _list = ['uno', 'dos ', 'tres', 'cuaro'];
-  var _vista = 'seleccione el Nombre del cliente';
 
   @override
   Widget build(BuildContext context) {
+    update();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Algarin Barber Shop'),
@@ -55,7 +55,7 @@ class MyServisestate extends State<myservis> {
               ),
             ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.autorenew_rounded),
         onPressed: () {
           update();
         },
