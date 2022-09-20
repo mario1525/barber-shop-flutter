@@ -82,7 +82,7 @@ class newUserstate extends State<newUser> {
                 controller: myController4,
                 decoration: const InputDecoration(
                   icon: Icon(Icons.grid_on_rounded),
-                  hintText: 'YYY-MM-DD ',
+                  hintText: 'YYYY-MM-DD ',
                   labelText: 'birthday date *',
                 ),
                 keyboardType: TextInputType.datetime,

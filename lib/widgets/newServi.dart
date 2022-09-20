@@ -23,10 +23,13 @@ class ServisUP extends State<servis> {
     update(); // Loading the diary when the app starts
   }
 
+
+
   final nombrecontroller = TextEditingController();
   final valorcontroller = TextEditingController();
 
   void _showForm(int? id) async {
+    update();
     if (id != null) {
       final existingJournal =
           _journals.firstWhere((element) => element['id'] == id);
@@ -91,6 +94,7 @@ class ServisUP extends State<servis> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Algarin Barber Shop '),
@@ -127,7 +131,10 @@ class ServisUP extends State<servis> {
             ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () => _showForm(null),
+
+        onPressed: () {
+          update();
+          _showForm(null);},
       ),
     );
   }

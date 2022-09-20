@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -25,8 +26,8 @@ class DB {
   }
 
 //insertar ususario
-  static Future<int> createItem(
-      String name, String? ape, int cell, String cump) async {
+  static Future<int> createItem(String name, String? ape, int cell,
+      String cump) async {
     final Database database = await initDb();
 
     final data = {
@@ -47,8 +48,8 @@ class DB {
   }
 
 //modificar usuarios
-  static Future<int> updateuser(
-      int id, String nombre, String ape, int cel, String fecha) async {
+  static Future<int> updateuser(int id, String nombre, String ape, int cel,
+      String fecha) async {
     final database = await initDb();
 
     final data = {
@@ -126,6 +127,48 @@ class DB {
     return result;
   }
 
-//añadir motilada
+// funciones para llenar facturas y dec_fac
+
+// add dec_fac
+
+static Future<int> createDecfac(int id_fac) async{
+    final Database database = await initDb();
+
+    final data = {
+      'id_fac' :id_fac,
+    };
+
+    final id = await database.insert('dec_fac',data,
+    conflictAlgorithm: ConflictAlgorithm.replace);
+    return id;
+}
+
+// add factura
+  static Future<int> createFacture(int iduser) async {
+    final Database database = await initDb();
+
+    final data = {
+      'id_user': iduser,
+
+    };
+    final id = await database.insert('factura', data,
+        conflictAlgorithm: ConflictAlgorithm.replace);
+    return id;
+  }
+
+  //mostrar facturas
+  static Future<List<Map<String, dynamic>>> getfacture() async {
+    final Database database = await initDb();
+    return database.query('fatura', orderBy: "id");
+  }
+
+  //buscar el id de un sevicio
+static Future<int> idserv(String nombre) async {
+    final Database database = await initDb();
+    var result = await database.rawQuery("SELECT id  FROM servicios where: nombre = ?" );
+    return 0;
+
+}
+
 
 }

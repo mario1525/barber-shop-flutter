@@ -47,7 +47,10 @@ class MyServisestate extends State<myservis> {
                         IconButton(
                             icon:
                                 const Icon(Icons.assignment_turned_in_outlined),
-                            onPressed: () {}),
+                            onPressed: () {
+                              _addFacture(_journals[index]['id']);
+                              Navigator.pushNamed(context, '/factura');
+                            }),
                       ],
                     ),
                   ),
@@ -62,4 +65,8 @@ class MyServisestate extends State<myservis> {
       ),
     );
   }
+  Future<void> _addFacture(idUser) async {
+    await DB.createFacture(idUser);
+  }
+
 }

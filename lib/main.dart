@@ -1,3 +1,4 @@
+import 'package:appalgarn/widgets/Factura.dart';
 import 'package:flutter/material.dart';
 import 'widgets/myhome.dart';
 import 'widgets/servis.dart';
@@ -17,6 +18,7 @@ void main() {
       '/user': (context) => newUser(),
       '/users': (context) => users(),
       '/statistics': (context) => statistics(),
+      '/factura': (context) => Factura(),
     },
   ));
 }
