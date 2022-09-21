@@ -5,7 +5,7 @@ class myhome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Algarin Barber Shop'),
+        title: const Text('Algarin Barber Shop0'),
       ),
       body: Center(
         child: Stack(

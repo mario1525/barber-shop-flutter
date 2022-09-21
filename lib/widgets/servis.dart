@@ -12,6 +12,7 @@ class myservis extends StatefulWidget {
 class MyServisestate extends State<myservis> {
   List<Map<String, dynamic>> _journals = [];
   bool _isLoading = true;
+  final now = DateTime.now().toString();
 
   void update() async {
     final data = await DB.getItems();
@@ -26,7 +27,7 @@ class MyServisestate extends State<myservis> {
     update();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Algarin Barber Shop'),
+        title: const Text('Algarin Barber Shop2'),
       ),
       body: _isLoading
           ? const Center(
@@ -48,7 +49,7 @@ class MyServisestate extends State<myservis> {
                             icon:
                                 const Icon(Icons.assignment_turned_in_outlined),
                             onPressed: () {
-                              _addFacture(_journals[index]['id']);
+                              _addFacture(now,_journals[index]['id']);
                               Navigator.pushNamed(context, '/factura');
                             }),
                       ],
@@ -65,8 +66,8 @@ class MyServisestate extends State<myservis> {
       ),
     );
   }
-  Future<void> _addFacture(idUser) async {
-    await DB.createFacture(idUser);
+  Future<void> _addFacture(fecha,idUser) async {
+    await DB.createFacture(fecha,idUser);
   }
 
 }

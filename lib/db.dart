@@ -144,10 +144,11 @@ static Future<int> createDecfac(int id_fac) async{
 }
 
 // add factura
-  static Future<int> createFacture(int iduser) async {
+  static Future<int> createFacture(int iduser, String fecha) async {
     final Database database = await initDb();
 
     final data = {
+      'fecha': fecha,
       'id_user': iduser,
 
     };

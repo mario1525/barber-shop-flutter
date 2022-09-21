@@ -22,7 +22,7 @@ class newUserstate extends State<newUser> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Algarin Barber Shop'),
+        title: const Text('Algarin Barber Shop4'),
       ),
       body: Form(
         key: _formKey,

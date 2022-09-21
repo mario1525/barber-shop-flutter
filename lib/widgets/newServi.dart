@@ -20,7 +20,7 @@ class ServisUP extends State<servis> {
   @override
   void initState() {
     super.initState();
-    update(); // Loading the diary when the app starts
+     // Loading the diary when the app starts
   }
 
 
@@ -94,10 +94,10 @@ class ServisUP extends State<servis> {
 
   @override
   Widget build(BuildContext context) {
-
+    update();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Algarin Barber Shop '),
+        title: const Text('Algarin Barber Shop 5'),
       ),
       body: _isLoading
           ? const Center(

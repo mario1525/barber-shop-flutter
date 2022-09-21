@@ -13,7 +13,7 @@ class Mystatistic extends State<statistics> {
   List<Map<String, dynamic>> _journals = [];
   bool _isLoading = true;
 
-  void update() async {
+  void _update() async {
     final data = await DB.getfacture();
     setState(() {
       _journals = data;
@@ -23,11 +23,11 @@ class Mystatistic extends State<statistics> {
 
   @override
   Widget build(BuildContext context) {
-    update();
+    _update();
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Algarin Barber Shop'),
+        title: const Text('Algarin Barber Shop1'),
       ),
       body: _isLoading
           ? const Center(
@@ -48,8 +48,8 @@ class Mystatistic extends State<statistics> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          update();
-          //Navigator.pushNamed(context, '/newservis');
+          _update();
+          Navigator.pushNamed(context, '/newservis');
         },
       ),
     );

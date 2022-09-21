@@ -26,7 +26,7 @@ class userspp extends State<users> {
     _updateDate();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Algarin Barber Shop'),
+        title: const Text('Algarin Barber Shop6'),
       ),
       body: _isLoading
           ? const Center(
