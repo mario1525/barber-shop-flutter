@@ -12,6 +12,9 @@ class Factura extends StatefulWidget{
 class Myfacture extends State<Factura> {
   List<Map<String, dynamic>> _journals = [];
   bool _isLoading = true;
+  bool value = false;
+
+
 
   void update() async {
     final data = await DB.getservis();
@@ -45,12 +48,20 @@ class Myfacture extends State<Factura> {
             width: 100,
             child: Row(
               children: [
+                Checkbox(
+                  checkColor: Colors.green,
+                  value: this.value,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      this.value = value!;
+                    });
+                  },
+                ),
               ],
             ),
             )
           ),
         ),
-
       )
     );
   }

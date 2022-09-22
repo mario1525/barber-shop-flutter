@@ -47,7 +47,7 @@ class userspp extends State<users> {
                         IconButton(
                             icon: const Icon(Icons.edit),
                             onPressed:
-                                () {} //=> _showForm(_journals[index]['id']),
+                                () => _showForm(_journals[index]['id']),
                             ),
                         IconButton(
                             icon: const Icon(Icons.delete),
@@ -69,9 +69,25 @@ class userspp extends State<users> {
       ),
     );
   }
+
 //actualizar usuario
+// falta por solucionar
+  final nombrecontroller = TextEditingController();
+  final valorcontroller = TextEditingController();
+
+  void _showForm(int? id) async {
+    _updateDate();
+    if (id != null) {
+      final existingJournal =
+      _journals.firstWhere((element) => element['id'] == id);
+      nombrecontroller.text = existingJournal['nombre'];
+      valorcontroller.text = existingJournal['valor'];
+    }
+  }
+
 
 // eliminar usuario
+  //falta por solucionar
   void _deleteItem(int id) async {
     await DB.deleteuser(id);
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

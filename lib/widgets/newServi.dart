@@ -110,7 +110,7 @@ class ServisUP extends State<servis> {
                 margin: const EdgeInsets.all(15),
                 child: ListTile(
                     title: Text(_journals[index]['nombre']),
-                    //subtitle: Text(_journals[index]['valor']),
+                    subtitle: Text(_journals[index]['valor'].toString()),
                     trailing: SizedBox(
                       width: 100,
                       child: Row(
@@ -122,7 +122,7 @@ class ServisUP extends State<servis> {
                           IconButton(
                               icon: const Icon(Icons.delete),
                               onPressed:
-                                  () {} //=>_deleteItem(_journals[index]['id']),
+                                  () =>_deleteItem(_journals[index]['id']),
                               ),
                         ],
                       ),
@@ -152,4 +152,14 @@ class ServisUP extends State<servis> {
     await DB.updateserv(id, nombrecontroller.text, valor);
     update();
   }
+
+  // eliminar un servicio
+ Future<void> _deleteItem(int id) async {
+    await DB.deleteserv(id);
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text('se elimino con exito un servicio'),
+    ));
+    update();
+ }
+
 }
