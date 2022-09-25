@@ -40,7 +40,8 @@ class MyServisestate extends State<myservis> {
                 margin: const EdgeInsets.all(15),
                 child: ListTile(
                   title: Text(_journals[index]['nombre']),
-                  subtitle: Text(_journals[index]['apellido']),
+                  subtitle: Text(_journals[index]['id'].toString()),
+
                   trailing: SizedBox(
                     width: 100,
                     child: Row(
@@ -49,7 +50,7 @@ class MyServisestate extends State<myservis> {
                             icon:
                                 const Icon(Icons.assignment_turned_in_outlined),
                             onPressed: () {
-                              _addFacture(now,_journals[index]['id']);
+                              _addFacture(_journals[index]['id'],now);
                               Navigator.pushNamed(context, '/factura');
                             }),
                       ],
@@ -66,8 +67,8 @@ class MyServisestate extends State<myservis> {
       ),
     );
   }
-  Future<void> _addFacture(fecha,idUser) async {
-    await DB.createFacture(fecha,idUser);
+  Future<void> _addFacture(idUser,fecha) async {
+    await DB.createFacture(idUser,fecha);
   }
 
 }

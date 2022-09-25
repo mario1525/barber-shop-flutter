@@ -26,11 +26,16 @@ class DB {
   }
 
 //insertar ususario
+
+
   static Future<int> createItem(String name, String? ape, int cell,
       String cump) async {
     final Database database = await initDb();
 
+
     final data = {
+
+
       'nombre': name,
       'apellido': ape,
       'cell': cell,
