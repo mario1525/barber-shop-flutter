@@ -39,7 +39,7 @@ class userspp extends State<users> {
                 margin: const EdgeInsets.all(15),
                 child: ListTile(
                   title: Text(_journals[index]['nombre']),
-                  subtitle: Text(_journals[index]['apellido']),
+                  subtitle: Text(_journals[index]['id'].toString()),
                   trailing: SizedBox(
                     width: 100,
                     child: Row(

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -25,17 +24,15 @@ class DB {
         "CREATE TABLE det_fac(id int primary key  ,id_fact int , id_serv int, FOREIGN KEY(id_fact) REFERENCES factura(id),FOREIGN KEY(id_serv) REFERENCES servicios(id));");
   }
 
-//insertar ususario
 
+//usuarios
+//insertar ususario
 
   static Future<int> createItem(String name, String? ape, int cell,
       String cump) async {
     final Database database = await initDb();
 
-
     final data = {
-
-
       'nombre': name,
       'apellido': ape,
       'cell': cell,
@@ -43,6 +40,7 @@ class DB {
     };
     final id = await database.insert('usuario', data,
         conflictAlgorithm: ConflictAlgorithm.replace);
+    print(id);
     return id;
   }
 
@@ -53,16 +51,15 @@ class DB {
   }
 
 //modificar usuarios
-  static Future<int> updateuser(int id, String nombre, String ape, int cel,
-      String fecha) async {
+  static Future<int> updateuser(int id,String nomb,String ape,int cel,String fec) async {
     final database = await initDb();
 
     final data = {
       'id': id,
-      'nombre': nombre,
+      'nombre': nomb,
       'ape': ape,
       'cell': cel,
-      'Fcumple': fecha,
+      'Fcumple': fec,
     };
 
     final result2 = await database.update(
@@ -120,6 +117,8 @@ class DB {
 
     await database.delete("servicios", where: "id = ?", whereArgs: [id]);
   }
+  //numero de servicios creados
+
 
   //para servir el formulario de motiladas
 
@@ -135,7 +134,6 @@ class DB {
 // funciones para llenar facturas y dec_fac
 
 // add dec_fac
-
 static Future<int> createDecfac(int id_fac) async{
     final Database database = await initDb();
 
@@ -169,10 +167,14 @@ static Future<int> createDecfac(int id_fac) async{
   }
 
   //buscar el id de un sevicio
-static Future<int> idserv(String nombre) async {
+  static Future<int> idserv(String nombre) async {
     final Database database = await initDb();
     var result = await database.rawQuery("SELECT id  FROM servicios where: nombre = ?" );
     return 0;
+
+//numero de facturas cargadas
+
+//numero de dec_factura cargadas
 
 }
 
