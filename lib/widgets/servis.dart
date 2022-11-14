@@ -40,7 +40,7 @@ class MyServisestate extends State<myservis> {
                 margin: const EdgeInsets.all(15),
                 child: ListTile(
                   title: Text(_journals[index]['nombre']),
-                  subtitle: Text(_journals[index]['id'].toString()),
+                  subtitle: Text(_journals[index]['apellido']),
 
                   trailing: SizedBox(
                     width: 100,

@@ -62,7 +62,12 @@ class Myfacture extends State<Factura> {
             )
           ),
         ),
-      )
+      ),
+    floatingActionButton: FloatingActionButton(
+      child: const Icon(Icons.playlist_add_check_circle_sharp),
+      onPressed: () {
+        },
+      ),
     );
   }
 }

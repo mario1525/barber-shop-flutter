@@ -40,14 +40,14 @@ class DB {
     };
     final id = await database.insert('usuario', data,
         conflictAlgorithm: ConflictAlgorithm.replace);
-    print(id);
+    //print(id);
     return id;
   }
 
 //mostrar ususarios
   static Future<List<Map<String, dynamic>>> getItems() async {
     final Database database = await initDb();
-    return database.query('usuario', orderBy: "id");
+    return database.query('usuario', orderBy: 'id');
   }
 
 //modificar usuarios
@@ -74,7 +74,7 @@ class DB {
 //eliminar usuarios
   static Future<void> deleteuser(int id) async {
     final database = await initDb();
-    await database.delete("ususario", where: "id = ?", whereArgs: [id]);
+    await database.delete("ususario", where: 'id = ?', whereArgs: [id]);
   }
 
 //funciones para la tabla servicio
