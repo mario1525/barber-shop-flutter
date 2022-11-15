@@ -27,7 +27,6 @@ class DB {
 
 //usuarios
 //insertar ususario
-
   static Future<int> createItem(String name, String? ape, int cell,
       String cump) async {
     final Database database = await initDb();
@@ -43,13 +42,11 @@ class DB {
     //print(id);
     return id;
   }
-
 //mostrar ususarios
   static Future<List<Map<String, dynamic>>> getItems() async {
     final Database database = await initDb();
     return database.query('usuario', orderBy: 'id');
   }
-
 //modificar usuarios
   static Future<int> updateuser(int id,String nomb,String ape,int cel,String fec) async {
     final database = await initDb();
@@ -70,15 +67,15 @@ class DB {
     );
     return result2;
   }
-
 //eliminar usuarios
   static Future<void> deleteuser(int id) async {
     final database = await initDb();
     await database.delete("ususario", where: 'id = ?', whereArgs: [id]);
   }
 
-//funciones para la tabla servicio
 
+
+//funciones para la tabla servicio
 //agregar servicio
   static Future<int> createItemser(String nombre, int valor) async {
     final Database database = await initDb();
@@ -91,13 +88,11 @@ class DB {
         conflictAlgorithm: ConflictAlgorithm.replace);
     return id;
   }
-
   //mostrar servicios
   static Future<List<Map<String, dynamic>>> getservis() async {
     final Database database = await initDb();
     return database.query('servicios', orderBy: "id");
   }
-
   //actualizar un servicio
   static Future<int> updateserv(int id, String nombre, int valor) async {
     final Database database = await initDb();
@@ -110,20 +105,16 @@ class DB {
         .update('servicios', data, where: "id = ?", whereArgs: [id]);
     return result;
   }
-
   // eliminar servicio
   static Future<void> deleteserv(int id) async {
     final Database database = await initDb();
 
     await database.delete("servicios", where: "id = ?", whereArgs: [id]);
   }
-  //numero de servicios creados
+
 
 
   //para servir el formulario de motiladas
-
-//servir lista de usuario
-
 //mostrar ususarios
   static Future<List<dynamic>> getClientes() async {
     final Database database = await initDb();
@@ -132,7 +123,6 @@ class DB {
   }
 
 // funciones para llenar facturas y dec_fac
-
 // add dec_fac
 static Future<int> createDecfac(int id_fac) async{
     final Database database = await initDb();
@@ -165,18 +155,5 @@ static Future<int> createDecfac(int id_fac) async{
     final Database database = await initDb();
     return database.query('fatura', orderBy: "id");
   }
-
-  //buscar el id de un sevicio
-  static Future<int> idserv(String nombre) async {
-    final Database database = await initDb();
-    var result = await database.rawQuery("SELECT id  FROM servicios where: nombre = ?" );
-    return 0;
-
-//numero de facturas cargadas
-
-//numero de dec_factura cargadas
-
-}
-
 
 }
