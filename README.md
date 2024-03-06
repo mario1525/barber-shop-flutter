@@ -25,7 +25,7 @@ El proyecto está organizado de la siguiente manera:
 1. Clona este repositorio en tu máquina local:
 
 ```bash
-git clone https://github.com/tuusuario/flutter-sqlite-app.git
+git clone https://github.com/mario1525/barber-shop-flutter.git
 ```
 2. Navega al directorio del proyecto:
 ```bash
